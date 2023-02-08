@@ -2,34 +2,28 @@ import Button from "./Button";
 import styles from "./App.module.css";
 import { useState, useEffect } from "react";
 import React from "react";
+import Movie from "./Movie"
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [coins, setCoins] = useState([]);
-  useEffect(() => {
-    fetch("https://api.coinpaprika.com/v1/tickers")
-    .then((response) => response.json())
-    .then((json) => {
-      setCoins(json);
+  const [movies, setMovies] = useState([]);
+  const getMovies = async() => {
+    const json = await (await fetch(
+        `https://yts.mx/api/v2/list_movies.json?minimun_rating=8.5?sort_by=year`
+      )).json();
+      setMovies(json.data.movies);
       setLoading(false);
-      console.log(coins);
-    });
-  }, [])
-  return(
-    <div>
-      <h1>The Coins! {loading ? "" : `(${coins.length})`}</h1>
-      {loading ? <strong>Loading...</strong> : 
-        <select>
-          {coins.map((coin) => (
-          <option id="op">{coin.name} ({coin.symbol}) : {coin.quotes.USD.price} USD</option>
-          ))}
-        </select>
-      }
-      <div>
-        {open.name}
-      </div>
-    </div>
-  );
+  };
+
+  useEffect(() => {
+    getMovies();
+  }, []);
+
+  return <div>
+    {loading ? <h1>Loading...</h1> : <div>{movies.map(m => 
+      <Movie m={m}/>
+    )}</div>}
+  </div>;
 }
 
 export default App;
