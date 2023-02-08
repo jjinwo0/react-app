@@ -1,3 +1,5 @@
+import  PropTypes from "prop-types";
+
 function Movie({m}){
     return (
         <div key={m.id}>
@@ -11,6 +13,13 @@ function Movie({m}){
             </ul>
         </div>
     );
+}
+
+Movie.PropTypes = {
+    medium_cover_image: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    summary: PropTypes.string.isRequired,
+    genres: PropTypes.arrayOf(PropTypes.string).isRequired 
 }
 
 export default Movie;
