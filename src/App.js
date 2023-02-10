@@ -9,16 +9,23 @@ import {
 } from "react-router-dom";
 
 function App() {
-  return <Router>
+  return(
+  <Router>
     <Switch>
-      <Route path="/movie">
+      <Route path="/hello">
+        <h1>Hello</h1>
+      </Route>
+    </Switch>
+    <Switch>
+      <Route path="/movie/:id">
         <Detail />
       </Route>
       <Route path="/">
         <Home />
       </Route>
     </Switch>
-  </Router>;
+  </Router>
+  );
 }
 
 export default App;
